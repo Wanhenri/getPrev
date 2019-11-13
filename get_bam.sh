@@ -1,6 +1,5 @@
 #! /bin/bash
 
-#inctime=/dados/dmdpesq/BAM_grib2/bin/inctime
 inctime=/dados/dmdpesq/Proj_GFS/bin/inctime/inctime
 
 getGrib() {
@@ -16,8 +15,6 @@ getGrib() {
   do
     datai=${2}${hhi}
     dataf=${3}${hhi}
-    #echo "${datai}"
-
 
     data=${datai}
 
@@ -38,19 +35,25 @@ getGrib() {
         echo "previsao $dataprev"
         
 
-        ###wget -c http://ftp.cptec.inpe.br/modelos/io/tempo/global/BAM/${dataanl}/BAM${dataanl}${yyyymmdd_prev}${hh}.grib2
-        ###wget -c http://ftp.cptec.inpe.br/modelos/io/tempo/global/BAM/${dataanl}/GPOSNMC{dataanl}${yyyymmdd_prev}${hh}P.grib2	
-        ###wget -c http://ftp.cptec.inpe.br/modelos/io/tempo/global/BAM/${dataanl}/GPOSREG{dataanl}${yyyymmdd_prev}${hh}.grib2
-        #sleep 4s
-        #echo "${yyyymm}"
-        #echo "${yyyymm}/${yyyymmdd}"
-        #echo "movendo arquivo BAM${data}${yyyymmdd}${hh}.grib2 para /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl} "
+        wget -c http://ftp.cptec.inpe.br/modelos/io/tempo/global/BAM/${dataanl}/BAM${dataanl}${yyyymmdd_prev}${hh}.grib2
+        wget -c http://ftp.cptec.inpe.br/modelos/io/tempo/global/BAM/${dataanl}/GPOSNMC${dataanl}${yyyymmdd_prev}${hh}P.grib2	
+        wget -c http://ftp.cptec.inpe.br/modelos/io/tempo/global/BAM/${dataanl}/GPOSREG${dataanl}${yyyymmdd_prev}${hh}.grib2
+
         
       done
-      #echo "${yyyymmdd_anl}/${tfct}"
-      #mkdir /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
-      #mkdir /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}/${tfct}
-      #mv *.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}/${tfct}
+
+      echo "${yyyymmdd_anl}"
+      if [ -e /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi} ]
+      then
+        echo "Diretório Existe"
+      else
+        echo "Diretório Nao Existe. Vamos Criar"
+        mkdir /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
+      fi
+
+      mv BAM${dataanl}*.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
+      mv GPOSNMC${dataanl}*.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
+      mv GPOSREG${dataanl}*.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}$
 
       data=$(${inctime} ${data} +${fct}hr %y4%m2%d2%h2)
 
