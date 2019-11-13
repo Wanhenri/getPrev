@@ -1,6 +1,5 @@
 #! /bin/bash
 
-#inctime=/dados/dmdpesq/BAM_grib2/bin/inctime
 inctime=/dados/dmdpesq/Proj_GFS/bin/inctime/inctime
 
 getGrib() {
@@ -61,7 +60,6 @@ getGrib() {
           wget -c http://ftp.cptec.inpe.br/modelos/io/tempo/global/BAM/${dataanl}/GPOSREG${dataanl}${yyyymmdd_prev}${hh}.grib2
         fi
         #sleep 4s
-
         
       done
 
@@ -85,11 +83,6 @@ getGrib() {
       mv BAM${dataanl}*.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
       mv GPOSNMC${dataanl}*.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
       mv GPOSREG${dataanl}*.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
-
-      #echo "${yyyymmdd_anl}/${tfct}"
-      #mkdir /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
-      #mkdir /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}/${tfct}
-      #mv *.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}/${tfct}
 
       data=$(${inctime} ${data} +${fct}hr %y4%m2%d2%h2)
 
