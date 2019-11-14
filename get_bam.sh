@@ -60,6 +60,7 @@ getGrib() {
           wget -c http://ftp.cptec.inpe.br/modelos/io/tempo/global/BAM/${dataanl}/GPOSREG${dataanl}${yyyymmdd_prev}${hh}.grib2
         fi
         #sleep 4s
+
         
       done
 
@@ -84,16 +85,19 @@ getGrib() {
       mv GPOSNMC${dataanl}*.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
       mv GPOSREG${dataanl}*.grib2 /dados/dmdpesq/BAM_grib2/${yyyymm}/${yyyymmdd_anl}${hhi}
 
+
       data=$(${inctime} ${data} +${fct}hr %y4%m2%d2%h2)
 
     done
   done
 }
 
-date=$(date +'%Y%m%d')
+#date=$(date +'%Y%m%d')
 datef=$(date -d ' +1 days' '+%Y%m%d')
+date=$(date -d ' -4 days' '+%Y%m%d')
 echo "$date"
 echo "$datef"
+echo "teste $datetest"
 for previsao in $(seq 24 24 168)
 do 
     echo "*****************"
