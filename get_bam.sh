@@ -40,7 +40,7 @@ getGrib() {
         then
           echo "BAM${dataanl}${yyyymmdd_prev}${hh}.grib2 existe"
         else
-          echo "BAM${dataanl}${yyyymmdd_prev}${hh}.grib2 nao existe"
+          echo "BAM${dataanl}${yyyymmdd_prev}${hh}.grib2 nao existe"                  
           wget -c http://ftp.cptec.inpe.br/modelos/io/tempo/global/BAM/${dataanl}/BAM${dataanl}${yyyymmdd_prev}${hh}.grib2
         fi
 

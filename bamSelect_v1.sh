@@ -50,22 +50,26 @@ do
         #echo "${hh}"
         #echo "${yyyymm}/${ddhh}"
 
-        dataprev=$(${inctime} ${dataanl} +${tfct}hr %y4%m2%d2%h2)
+        dataprev=$(${inctime} ${dataanl} +${tfct}hr %y4%m2%d2%h2)   
 
         echo "data previsao ${dataprev}"
         yyyymmdd_prev=$(echo ${dataprev} | cut -c 1-8)
 
         fileout_acumula=etapa1/${hh}/BAM.t${i}z.f${tfct}.anl${dataanl}.prev${yyyymmdd_prev}_${var}.grib2
         #fileout_acumula=etapa1/${hh}/gfs.t${hh}z.pgrb2f${tfct}.${dataanl}_${1}.grib2
-    for temp in $(seq -w 0 6 18)
+#    for temp in $(seq -w 18 -6 0)
+    for temp in $(seq -w 24 -6 6)
     do
+        dataprev_bamgrib2=$(${inctime} ${dataanl} +${temp}hr %y4%m2%d2%h2)
+        echo "dataprev_bamgrib2: ${dataprev_bamgrib2}"
+        echo "*****"
         echo "***${temp}"
-        arq_prev=${yyyymm}/${dataanl}/BAM${dataanl}${yyyymmdd_prev}${temp}.grib2
+        arq_prev=${yyyymm}/${dataanl}/BAM${dataanl}${dataprev_bamgrib2}.grib2
         echo "arquivo inicial ${arq_prev}"
         #arq_prev=${gribs}/${yyyymm}/${ddhh}/gfs.t${hh}z.pgrb2f${temp}.${dataanl}.grib2
         ##Extrai a variavel
         echo "Fileout ${fileout_acumula}"
-        ~/bin/wgrib2 $arq_prev -append -match "(:${var}:)" -grib  $fileout_acumula
+        #~/bin/wgrib2 $arq_prev -append -match "(:${var}:)" -grib  $fileout_acumula
 
     done
 
@@ -73,7 +77,7 @@ do
     echo "**********************************"
     echo "Converte arquivo grib2 para netcdf"
     echo "**********************************"
-    ~/bin/wgrib2 $fileout_acumula -netcdf ${fileout_nc}
+    #~/bin/wgrib2 $fileout_acumula -netcdf ${fileout_nc}
 
     #dataprev=$(${inctime} ${dataanl} +${fct}hr %y4%m2%d2%h2)
     #dataprev=$(${inctime} ${dataanl} +${tfct}hr %y4%m2%d2%h2)
@@ -81,7 +85,7 @@ do
     echo "************************************"
     echo "Calcular a somar dos passos de tempo"
     echo "************************************"
-    cdo timselsum,28,0 ${fileout_nc} etapa3/${i}/${tfct}/BAM.t${i}z.f${tfct}.prev${yyyymmdd_prev}_${var}.grib2.nc
+    #cdo timselsum,28,0 ${fileout_nc} etapa3/${i}/${tfct}/BAM.t${i}z.f${tfct}.prev${yyyymmdd_prev}_${var}.grib2.nc
     	    
 
     data=$(${inctime} ${data} +${fct}hr %y4%m2%d2%h2)
